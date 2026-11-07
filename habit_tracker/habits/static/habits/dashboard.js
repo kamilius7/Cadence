@@ -24,6 +24,20 @@ document.addEventListener('DOMContentLoaded', () => {
     day.addEventListener('click', () => showToast(`${day.dataset.day} selected for this habit.`));
   });
 
+  const panels = document.querySelectorAll('.support-panel');
+  document.querySelectorAll('[data-panel]').forEach((button) => {
+    button.addEventListener('click', () => {
+      panels.forEach((panel) => { panel.hidden = panel.id !== button.dataset.panel; });
+      document.getElementById(button.dataset.panel)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  });
+  document.querySelectorAll('.close-panel').forEach((button) => {
+    button.addEventListener('click', () => { button.closest('.support-panel').hidden = true; });
+  });
+  document.querySelectorAll('.toggle').forEach((button) => {
+    button.addEventListener('click', () => button.classList.toggle('active'));
+  });
+
   document.querySelectorAll('[data-toast]').forEach((button) => {
     button.addEventListener('click', () => showToast(button.dataset.toast));
   });

@@ -17,9 +17,9 @@
       <a class="brand" href="{% url 'dashboard' %}" aria-label="Cadence home"><span class="brand-mark">c</span><span>cadence</span></a>
       <div class="date-block"><span class="eyebrow">Saturday, 7 Nov</span><span class="date-note">A gentle rhythm for today</span></div>
       <nav class="top-actions" aria-label="Primary navigation">
-        <button class="icon-button" type="button" title="Sync status" aria-label="Sync status"><span class="sync-dot"></span></button>
-        <button class="icon-button" type="button" title="View statistics" aria-label="View statistics" data-toast="Your weekly view is coming together.">▥</button>
-        <button class="icon-button" type="button" title="Open settings" aria-label="Open settings" data-toast="Settings are ready for your next pass.">☼</button>
+        <button class="icon-button" type="button" title="Sync status" aria-label="Sync status" data-panel="sync-panel"><span class="sync-dot"></span></button>
+        <button class="icon-button" type="button" title="View statistics" aria-label="View statistics" data-panel="stats-panel">▥</button>
+        <button class="icon-button" type="button" title="Open settings" aria-label="Open settings" data-panel="settings-panel">☼</button>
       </nav>
     </header>
 
@@ -63,6 +63,24 @@
     <section class="add-panel">
       <div><span class="eyebrow accent-label">A NEW RITUAL?</span><h2>Keep the list honest.</h2></div>
       <form method="post" class="add-form">{% csrf_token %}<label class="sr-only" for="new-habit">New habit name</label><input id="new-habit" name="name" type="text" maxlength="100" placeholder="Name a small habit..." required><button type="submit">Add habit <span>↗</span></button></form>
+    </section>
+    <section class="support-panels" aria-label="Cadence tools">
+      <article class="support-panel" id="stats-panel" hidden>
+        <div class="panel-heading"><div><span class="eyebrow accent-label">YOUR PATTERN</span><h2>Statistics</h2></div><button class="close-panel" type="button" aria-label="Close statistics">×</button></div>
+        <div class="stats-grid"><div class="stat-ring"><strong>68%</strong><span>this week</span></div><div class="stat-item"><span>Best streak</span><strong>12 days</strong><small>Read 10 pages</small></div><div class="stat-item"><span>Completed</span><strong>24</strong><small>habits this month</small></div></div>
+        <div class="bar-chart" aria-label="Weekly completion chart"><span style="height:42%"></span><span style="height:66%"></span><span style="height:55%"></span><span style="height:78%"></span><span style="height:48%"></span><span style="height:92%"></span><span style="height:72%"></span></div>
+        <div class="chart-labels"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+      </article>
+      <article class="support-panel" id="sync-panel" hidden>
+        <div class="panel-heading"><div><span class="eyebrow accent-label">SAFE & SOUND</span><h2>Sync & backup</h2></div><button class="close-panel" type="button" aria-label="Close sync panel">×</button></div>
+        <div class="sync-status"><div class="cloud-icon">✓</div><div><strong>Everything is in rhythm</strong><span>Last synced just now</span><small><i></i> Connected to Cadence Cloud</small></div></div>
+        <button class="primary-action" type="button" data-toast="Your habits are synced securely.">↻ &nbsp; Sync now <span>→</span></button>
+        <div class="settings-row"><div><strong>Restore data</strong><span>From a previous backup</span></div><b>→</b></div>
+      </article>
+      <article class="support-panel" id="settings-panel" hidden>
+        <div class="panel-heading"><div><span class="eyebrow accent-label">MAKE IT YOURS</span><h2>Settings</h2></div><button class="close-panel" type="button" aria-label="Close settings">×</button></div>
+        <div class="settings-list"><div class="settings-row"><div><strong>Theme</strong><span>Neomorphic light</span></div><b>⌄</b></div><div class="settings-row"><div><strong>Notifications</strong><span>Gentle reminders at 8:00 PM</span></div><button class="toggle active" type="button" aria-label="Toggle notifications"><i></i></button></div><div class="settings-row"><div><strong>First day of week</strong><span>Monday</span></div><b>⌄</b></div><div class="settings-row"><div><strong>Sound effects</strong><span>Soft feedback</span></div><button class="toggle" type="button" aria-label="Toggle sound effects"><i></i></button></div></div>
+      </article>
     </section>
     <footer><span>cadence / a softer way to stay consistent</span><span>Built for the in-between moments.</span></footer>
   </main>

@@ -1,0 +1,72 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e9edf5">
+  <title>Cadence — Small steps, steady rhythm</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'habits/dashboard.css' %}">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="{% url 'dashboard' %}" aria-label="Cadence home"><span class="brand-mark">c</span><span>cadence</span></a>
+      <div class="date-block"><span class="eyebrow">Saturday, 7 Nov</span><span class="date-note">A gentle rhythm for today</span></div>
+      <nav class="top-actions" aria-label="Primary navigation">
+        <button class="icon-button" type="button" title="Sync status" aria-label="Sync status"><span class="sync-dot"></span></button>
+        <button class="icon-button" type="button" title="View statistics" aria-label="View statistics" data-toast="Your weekly view is coming together.">▥</button>
+        <button class="icon-button" type="button" title="Open settings" aria-label="Open settings" data-toast="Settings are ready for your next pass.">☼</button>
+      </nav>
+    </header>
+
+    <section class="hero-row">
+      <div>
+        <p class="eyebrow accent-label">YOUR DAILY CADENCE</p>
+        <h1>Make space for<br><em>what matters.</em></h1>
+        <p class="hero-copy">Small rituals, tracked with care. Keep your momentum soft and steady.</p>
+      </div>
+      <div class="progress-card" aria-label="Daily progress">
+        <div class="progress-ring"><span>0%</span></div>
+        <div><strong>0 of {{ habits|length }}</strong><span>habits done today</span></div>
+      </div>
+    </section>
+
+    <section class="filters" aria-label="Habit filters">
+      <button class="filter active" type="button">All <span>{{ habits|length }}</span></button>
+      <button class="filter" type="button">Morning</button>
+      <button class="filter" type="button">Evening</button>
+      <button class="filter" type="button">Selfcare</button>
+      <span class="filter-hint">Tap a day to mark it complete</span>
+    </section>
+
+    <section class="week-header" aria-label="Week days">
+      <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span class="current">Sat</span><span>Sun</span>
+    </section>
+
+    <section class="habit-list" aria-label="Your habits">
+      {% for habit in habits %}
+      <article class="habit-card" data-habit-card>
+        <div class="habit-heading"><div><span class="habit-category">{{ habit.category }}</span><h2>{{ habit.name }}</h2></div><div class="habit-tools"><span class="streak">{{ habit.streak }} day{% if habit.streak != 1 %}s{% endif %}</span><button type="button" class="mini-button" aria-label="Edit {{ habit.name }}">↗</button></div></div>
+        <div class="habit-week">
+          <button class="day status-{{ habit.status }}" type="button" data-day="Monday" aria-label="Monday for {{ habit.name }}">{% if habit.status == 'done' %}✓{% elif habit.status == 'missed' %}×{% elif habit.status == 'progress' %}50%{% else %}·{% endif %}</button>
+          <button class="day" type="button" data-day="Tuesday">14</button><button class="day" type="button" data-day="Wednesday">15</button><button class="day" type="button" data-day="Thursday">16</button><button class="day" type="button" data-day="Friday">17</button><button class="day weekend" type="button" data-day="Saturday">18</button><button class="day weekend current-day" type="button" data-day="Sunday">19</button>
+          <button class="complete-button" type="button" aria-label="Complete {{ habit.name }}" data-complete>+</button>
+        </div>
+      </article>
+      {% endfor %}
+    </section>
+
+    <section class="add-panel">
+      <div><span class="eyebrow accent-label">A NEW RITUAL?</span><h2>Keep the list honest.</h2></div>
+      <form method="post" class="add-form">{% csrf_token %}<label class="sr-only" for="new-habit">New habit name</label><input id="new-habit" name="name" type="text" maxlength="100" placeholder="Name a small habit..." required><button type="submit">Add habit <span>↗</span></button></form>
+    </section>
+    <footer><span>cadence / a softer way to stay consistent</span><span>Built for the in-between moments.</span></footer>
+  </main>
+  <div class="toast" role="status" aria-live="polite"></div>
+  <script src="{% static 'habits/dashboard.js' %}"></script>
+</body>
+</html>
